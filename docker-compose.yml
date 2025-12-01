@@ -1,16 +1,13 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  hunter:
+  web:
     build: .
     ports:
       - "8000:8000"
-    environment:
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${SUPABASE_KEY}
-      - SERPER_KEYS=${SERPER_KEYS}
-      - PORT=8000
-      - DEBUG=false
-    restart: unless-stopped
+    env_file:
+      - .env
     volumes:
-      - ./data:/app/data
+      - .:/app
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+    
